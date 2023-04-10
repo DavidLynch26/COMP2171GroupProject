@@ -42,6 +42,7 @@ public class DatabaseController {
             "(id VARCHAR(12) not null,"
             + "item VARCHAR(255),"
             + "price DECIMAL(65),"
+            + "quantity INTEGER,"
             + "PRIMARY KEY(id))", 
             
             "(id VARCHAR(12) not null,"
@@ -59,9 +60,9 @@ public class DatabaseController {
 
     public DatabaseController(){
         Statement stmt = setConnection(0);
-//        drop(tableNames, "TABLE ", stmt);
         createDatabase(stmt);
         stmt = setConnection(1);
+      //  drop(tableNames, "TABLE ", stmt);
         createTables(stmt);
         try {
             stmt.close();
