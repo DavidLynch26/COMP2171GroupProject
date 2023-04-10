@@ -52,15 +52,16 @@ public class DatabaseController {
             + "PRIMARY KEY(id))"};
     
     private static final String[] tableNames = {"Admin", "Driver", "Customer", "Inventory", "CustOrder"};
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/" + getDB_NAME();
+    private static final String DB_URL = "jdbc:mysql://localhost/" + getDB_NAME();
     private static final String USER = "root";
     private static final String PASS = "";
     private static final String DB_NAME = "BlackHardSweetCompany";
 
     public DatabaseController(){
-        Statement stmt = setConnection();
+        Statement stmt = setConnection(0);
 //        drop(tableNames, "TABLE ", stmt);
         createDatabase(stmt);
+        stmt = setConnection(1);
         createTables(stmt);
         try {
             stmt.close();
@@ -72,7 +73,7 @@ public class DatabaseController {
     public Boolean login(String userType, String userCredentials[]){
         try {
             System.out.println(userType);
-            Statement stmt = setConnection();
+            Statement stmt = setConnection(1);
 
             String sql = "SELECT * "
                     + "FROM " + userType +" "
@@ -131,14 +132,15 @@ public class DatabaseController {
         }
     }
 
-    private Statement setConnection(){
+    private Statement setConnection(Integer init){
         Statement stmt = null;
-        
+        Connection conn = null;
         try{
            Class.forName("com.mysql.cj.jdbc.Driver");
-           Connection conn = DriverManager.getConnection(getDB_URL(), getUSER(), getPASS());
-           if (conn == null ){
-               System.out.println("asd");
+           if(init == 0){
+               conn = DriverManager.getConnection("jdbc:mysql://localhost/", getUSER(), getPASS());
+           }else{
+               conn = DriverManager.getConnection(getDB_URL(), getUSER(), getPASS());
            }
            
            stmt = conn.createStatement();
@@ -168,7 +170,7 @@ public class DatabaseController {
     
     public void addToTables(String[] data, String tableName){
         try {
-            Statement stmt = setConnection();
+            Statement stmt = setConnection(1);
                         
             String sql = "SELECT *"
                     + "FROM "+tableName;
@@ -250,7 +252,7 @@ public class DatabaseController {
                 default -> {
                 }
             }
-            Statement stmt = setConnection();
+            Statement stmt = setConnection(1);
             rs = stmt.executeQuery(sql);
             
             return rs; 
