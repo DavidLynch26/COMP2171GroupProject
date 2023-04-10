@@ -52,7 +52,7 @@ public class DatabaseController {
             + "PRIMARY KEY(id))"};
     
     private static final String[] tableNames = {"Admin", "Driver", "Customer", "Inventory", "CustOrder"};
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/" + getDB_NAME();
+    private static final String DB_URL = "jdbc:mysql://localhost/" + getDB_NAME();
     private static final String USER = "root";
     private static final String PASS = "";
     private static final String DB_NAME = "BlackHardSweetCompany";
