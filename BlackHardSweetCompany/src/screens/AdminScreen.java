@@ -87,12 +87,6 @@ public class AdminScreen extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        makeOrder = new javax.swing.JPanel();
-        driverComboBox = new javax.swing.JComboBox<>();
-        candyComboBox = new javax.swing.JComboBox<>();
-        confirmOrderButton = new javax.swing.JButton();
-        quantityTextField = new javax.swing.JTextField();
-        candyAmountLabel = new javax.swing.JLabel();
         addDriver = new javax.swing.JPanel();
         firstNameLabel = new javax.swing.JLabel();
         firstNameTextField = new javax.swing.JTextField();
@@ -103,56 +97,25 @@ public class AdminScreen extends javax.swing.JFrame {
         passwordLabel = new javax.swing.JLabel();
         passWordTextField = new javax.swing.JTextField();
         addDriverButton = new javax.swing.JButton();
+        makeOrder = new javax.swing.JPanel();
+        driverComboBox = new javax.swing.JComboBox<>();
+        candyComboBox = new javax.swing.JComboBox<>();
+        confirmOrderButton = new javax.swing.JButton();
+        quantityTextField = new javax.swing.JTextField();
+        candyAmountLabel = new javax.swing.JLabel();
         addInventory = new javax.swing.JPanel();
         firstNameLabel1 = new javax.swing.JLabel();
         itemNameTextField = new javax.swing.JTextField();
-        lastNameLabel1 = new javax.swing.JLabel();
+        quantity = new javax.swing.JLabel();
+        txtQuantity = new javax.swing.JTextField();
         itemPriceTextField = new javax.swing.JTextField();
         addItemButton = new javax.swing.JButton();
+        Clear = new javax.swing.JButton();
+        lastNameLabel1 = new javax.swing.JLabel();
+        itemID = new javax.swing.JLabel();
+        txtitemID = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        makeOrder.setName("Make Order"); // NOI18N
-
-        driverComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        candyComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        confirmOrderButton.setText("Confirm Order");
-
-        candyAmountLabel.setText("Candy Amount");
-
-        javax.swing.GroupLayout makeOrderLayout = new javax.swing.GroupLayout(makeOrder);
-        makeOrder.setLayout(makeOrderLayout);
-        makeOrderLayout.setHorizontalGroup(
-            makeOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(makeOrderLayout.createSequentialGroup()
-                .addGap(121, 121, 121)
-                .addGroup(makeOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addGroup(makeOrderLayout.createSequentialGroup()
-                        .addComponent(candyAmountLabel)
-                        .addGap(47, 47, 47)
-                        .addComponent(quantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(confirmOrderButton)
-                    .addComponent(candyComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(driverComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(100, Short.MAX_VALUE))
-        );
-        makeOrderLayout.setVerticalGroup(
-            makeOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(makeOrderLayout.createSequentialGroup()
-                .addGap(112, 112, 112)
-                .addComponent(driverComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(candyComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(makeOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(quantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(candyAmountLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(confirmOrderButton)
-                .addGap(31, 31, 31))
-        );
 
         addDriver.setName("Add Driver"); // NOI18N
         addDriver.setLayout(new java.awt.GridBagLayout());
@@ -236,6 +199,53 @@ public class AdminScreen extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 2;
         addDriver.add(addDriverButton, gridBagConstraints);
 
+        makeOrder.setName("Make Order"); // NOI18N
+
+        driverComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        driverComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                driverComboBoxActionPerformed(evt);
+            }
+        });
+
+        candyComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        confirmOrderButton.setText("Confirm Order");
+
+        candyAmountLabel.setText("Candy Amount");
+
+        javax.swing.GroupLayout makeOrderLayout = new javax.swing.GroupLayout(makeOrder);
+        makeOrder.setLayout(makeOrderLayout);
+        makeOrderLayout.setHorizontalGroup(
+            makeOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(makeOrderLayout.createSequentialGroup()
+                .addGap(121, 121, 121)
+                .addGroup(makeOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addGroup(makeOrderLayout.createSequentialGroup()
+                        .addComponent(candyAmountLabel)
+                        .addGap(47, 47, 47)
+                        .addComponent(quantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(confirmOrderButton)
+                    .addComponent(candyComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(driverComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(280, Short.MAX_VALUE))
+        );
+        makeOrderLayout.setVerticalGroup(
+            makeOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(makeOrderLayout.createSequentialGroup()
+                .addGap(112, 112, 112)
+                .addComponent(driverComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(candyComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(makeOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(quantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(candyAmountLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addComponent(confirmOrderButton)
+                .addGap(31, 31, 31))
+        );
+
         addInventory.setName("Add Item"); // NOI18N
         addDriver.setName("Add Employee");
         addInventory.setLayout(new java.awt.GridBagLayout());
@@ -243,7 +253,10 @@ public class AdminScreen extends javax.swing.JFrame {
         firstNameLabel1.setText("Item Name");
         firstNameLabel1.setAlignmentX(1.0F);
         firstNameLabel1.setAlignmentY(1.0F);
-        addInventory.add(firstNameLabel1, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        addInventory.add(firstNameLabel1, gridBagConstraints);
 
         itemNameTextField.setToolTipText("");
         itemNameTextField.setAlignmentX(2.0F);
@@ -253,21 +266,26 @@ public class AdminScreen extends javax.swing.JFrame {
                 itemNameTextFieldActionPerformed(evt);
             }
         });
-        addInventory.add(itemNameTextField, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        addInventory.add(itemNameTextField, gridBagConstraints);
 
-        lastNameLabel1.setText("Item Price");
-        lastNameLabel1.setAlignmentX(1.0F);
-        lastNameLabel1.setAlignmentY(2.0F);
+        quantity.setText("Quantity");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        addInventory.add(lastNameLabel1, gridBagConstraints);
+        gridBagConstraints.gridy = 3;
+        addInventory.add(quantity, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        addInventory.add(txtQuantity, gridBagConstraints);
 
         itemPriceTextField.setAlignmentX(2.0F);
         itemPriceTextField.setAlignmentY(3.0F);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         addInventory.add(itemPriceTextField, gridBagConstraints);
 
         addItemButton.setText("Add Item");
@@ -279,15 +297,42 @@ public class AdminScreen extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridy = 5;
         addInventory.add(addItemButton, gridBagConstraints);
+
+        Clear.setText("Clear");
+        Clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ClearActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 5;
+        addInventory.add(Clear, gridBagConstraints);
+
+        lastNameLabel1.setText("Item Price");
+        lastNameLabel1.setAlignmentX(1.0F);
+        lastNameLabel1.setAlignmentY(2.0F);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        addInventory.add(lastNameLabel1, gridBagConstraints);
+
+        itemID.setText("itemID");
+        addInventory.add(itemID, new java.awt.GridBagConstraints());
+        addInventory.add(txtitemID, new java.awt.GridBagConstraints());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(makeOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 620, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(addInventory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -295,13 +340,18 @@ public class AdminScreen extends javax.swing.JFrame {
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(addInventory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap()
+                    .addComponent(makeOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(makeOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 323, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(addInventory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -309,9 +359,9 @@ public class AdminScreen extends javax.swing.JFrame {
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(addInventory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap()
+                    .addComponent(makeOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -366,6 +416,18 @@ public class AdminScreen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addItemButtonActionPerformed
 
+    private void driverComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_driverComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_driverComboBoxActionPerformed
+
+    private void ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearActionPerformed
+        // TODO add your handling code here:
+        txtitemID.setText("");
+        itemNameTextField.setText("");
+        itemPriceTextField.setText("");
+        txtQuantity.setText("");
+    }//GEN-LAST:event_ClearActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -402,6 +464,7 @@ public class AdminScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Clear;
     private javax.swing.JPanel addDriver;
     private javax.swing.JButton addDriverButton;
     private javax.swing.JPanel addInventory;
@@ -413,6 +476,7 @@ public class AdminScreen extends javax.swing.JFrame {
     private javax.swing.JLabel firstNameLabel;
     private javax.swing.JLabel firstNameLabel1;
     private javax.swing.JTextField firstNameTextField;
+    private javax.swing.JLabel itemID;
     private javax.swing.JTextField itemNameTextField;
     private javax.swing.JTextField itemPriceTextField;
     private javax.swing.JLabel lastNameLabel;
@@ -421,7 +485,10 @@ public class AdminScreen extends javax.swing.JFrame {
     private javax.swing.JPanel makeOrder;
     private javax.swing.JTextField passWordTextField;
     private javax.swing.JLabel passwordLabel;
+    private javax.swing.JLabel quantity;
     private javax.swing.JTextField quantityTextField;
+    private javax.swing.JTextField txtQuantity;
+    private javax.swing.JTextField txtitemID;
     private javax.swing.JLabel userNameLabel;
     private javax.swing.JTextField userNameTextField;
     // End of variables declaration//GEN-END:variables
