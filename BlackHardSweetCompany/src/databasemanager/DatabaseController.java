@@ -47,9 +47,10 @@ public class DatabaseController {
             
             "(id VARCHAR(12) not null,"
             + "itemid VARCHAR(255),"
-            + "custid INTEGER,"
-            + "drivid INTEGER,"
+            + "custid VARCHAR(255),"
+            + "drivid VARCHAR(255),"
             + "price DECIMAL(65),"
+            + "quantity INTEGER,"
             + "PRIMARY KEY(id))"};
     
     private static final String[] tableNames = {"Admin", "Driver", "Customer", "Inventory", "CustOrder"};
@@ -62,7 +63,7 @@ public class DatabaseController {
         Statement stmt = setConnection(0);
         createDatabase(stmt);
         stmt = setConnection(1);
-      //  drop(tableNames, "TABLE ", stmt);
+//        drop(tableNames, "TABLE ", stmt);
         createTables(stmt);
         try {
             stmt.close();
@@ -103,6 +104,7 @@ public class DatabaseController {
                 stmt.executeUpdate(sql);
                 
                 if(table.equals("Admin")){
+                    System.out.println("asd");
                     String[] adminData = {"Owner", "Owner", "admin", "admin"};
                     addToTables(adminData, "Admin");
                 }
@@ -169,14 +171,66 @@ public class DatabaseController {
         }
     }
     
+//    public void makeOrder(Integer item,Integer Customer, String amount){
+//        Statement stmt = setConnection(1);
+//        
+//        String sql = "UPDATE inventory "
+//                + "SET quantity = quantity - " + amount + " "
+//                + "WHERE id = 'I"+item + "' "
+//                + "AND quantity >= " + amount;
+//        sql = "INSERT INTO " + tableNames[4] +
+//                + "VALUES("";
+//        try {
+//            stmt.executeUpdate(sql);
+//            stmt.close();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+    
     public void addToTables(String[] data, String tableName){
         try {
             Statement stmt = setConnection(1);
-                        
+            if (tableName.equals("CustOrder")){
+                
+               Integer counter = -1;
+
+               String sql = "SELECT price FROM inventory WHERE id = '" + data[0] + "'";    
+               
+               ResultSet rs = stmt.executeQuery(sql);
+               
+               String price = "";
+               
+               while(rs.next()){
+                   price = rs.getString("price");
+               }
+                              
+               sql = "SELECT COUNT(id) FROM driver";
+               
+               rs = stmt.executeQuery(sql);
+
+               while(rs.next()){
+                    counter ++;
+               }
+               
+               String[] temp = {data[0], data[1], "D" + (int)Math.floor(Math.random() * (counter - 0 + 1) + 0), price, data[2]}; 
+               for(String tmp: temp){
+                   System.out.println(tmp);
+               }
+               data = temp;      
+               
+               sql = "UPDATE inventory SET quantity = quantity - " + data[4] + " WHERE quantity > " + data[4] + " AND id = '" + data[0] + "'";
+               
+               System.out.println(sql);
+               
+               stmt.executeUpdate(sql);
+            }
+           
             String sql = "SELECT *"
                     + "FROM "+tableName;
             ResultSet rs = stmt.executeQuery(sql);
-            ResultSetMetaData rsmd = rs.getMetaData();
+            ResultSetMetaData rsmd = rs.getMetaData(); 
+            
             Integer columnTotal = rsmd.getColumnCount();
             Integer maxID = 0;
             
@@ -199,8 +253,12 @@ public class DatabaseController {
             sql = sql.substring(0, sql.length()-1);
             sql += ") ";
             
-            sql += "VALUES (" + '\'' + tableName.charAt(0) + maxID + '\'' + ", ";
-            
+            if(tableName.equals("CustOrder")){
+                sql += "VALUES (" + '\'' + "O" + maxID + '\'' + ", ";
+            }else{
+                sql += "VALUES (" + '\'' + tableName.charAt(0) + maxID + '\'' + ", ";
+            }
+                        
             for(String input : data){
                 sql += '\'' + input + '\'' + ",";
             }
@@ -244,6 +302,8 @@ public class DatabaseController {
         
         try {
             switch (table) {
+                case "Customer" -> sql = "SELECT * "
+                            + "FROM customer";
                 case "Driver" -> sql = "SELECT id, firstname, lastname "
                             + "FROM driver";
                 case "Inventory" -> sql = "SELECT * "

@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -22,50 +24,90 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AdminScreen extends javax.swing.JFrame {
 
+    JTable jTable1;
+    JTable jTable2;
+    JTable jTable3;
+    JTable jTable4;
+    
     /**
      * Creates new form AdminScreen
      */
     public AdminScreen() {
         initComponents();
         
+        jTable1 = new JTable(MainFrame.getDriverModel());
+        jTable1.setEnabled(false);
+        JScrollPane scrollPane1 = new JScrollPane(jTable1);
+        scrollPane1.setName("View Driver");
+        this.add(scrollPane1);
+        this.add(addDriver);
+        
+        jTable2 = new JTable(MainFrame.getInventoryModel());
+        jTable2.setEnabled(false);
+        JScrollPane scrollPane2 = new JScrollPane(jTable2);
+        scrollPane2.setName("View Inventory");
+        this.add(scrollPane2);
+        this.add(addInventory);
+
+        jTable3 = new JTable(MainFrame.getCustOrderModel());
+        jTable3.setEnabled(false);
+        JScrollPane scrollPane3 = new JScrollPane(jTable3);
+        scrollPane3.setName("View Order");
+        this.add(scrollPane3);
+        this.add(makeOrder);
+        
+        jTable4 = new JTable(MainFrame.getCustomerModel());
+        jTable4.setEnabled(false);
+        JScrollPane scrollPane4 = new JScrollPane(jTable4);
+        scrollPane4.setName("View Customer");
+        this.add(scrollPane4);
+        this.add(addDriver);
     }
     
-    public Boolean isInteger(String test){
-        if(test == null){
-            return false;
-        }
-        
+    public Boolean isInteger(String test){        
         try{
-            Double.parseDouble(test);
+            if(test == null){
+                return false;
+            }
+            Integer.parseInt(test);
             return true;
         }catch(NumberFormatException e){
             return false;
         }
     }
     
-    public void setTable(String table){
+    public JComboBox<String> getComboBox(String comboBox){
+        JComboBox temp = new JComboBox();
+        switch(comboBox){
+            case "items" -> {
+                return itemComboBox;
+            }
+            case "customers" -> {
+                return customerComboBox;
+            }
+        }
+        return temp;
+    }
+    
+    public JTable getTable(String table){
+        JTable test = new JTable();
         switch (table) {
             case "Driver" -> {
-                JTable jTable1 = new JTable(MainFrame.getDriverModel());
-                JScrollPane scrollPane1 = new JScrollPane(jTable1);
-                scrollPane1.setName("View Driver");
-                this.add(scrollPane1);
+                return jTable1;
             }
             case "Inventory" -> {
-                JTable jTable2 = new JTable(MainFrame.getInventoryModel());
-                JScrollPane scrollPane2 = new JScrollPane(jTable2);
-                scrollPane2.setName("View Inventory");
-                this.add(scrollPane2);
+                return jTable2;
             }
             case "CustOrder" -> {
-                JTable jTable3 = new JTable(MainFrame.getCustOrderModel());
-                JScrollPane scrollPane3 = new JScrollPane(jTable3);
-                scrollPane3.setName("View Order");
-                this.add(scrollPane3);
+                return jTable3;
+            }
+            case "Customer" -> {
+                return jTable4;
             }
             default -> {
             }
         }
+        return test;
     }
     
     public Map <String, Component> getAllPanels(){
@@ -87,103 +129,183 @@ public class AdminScreen extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        addCustomer = new javax.swing.JPanel();
+        customerFirstNameLabel = new javax.swing.JLabel();
+        customerFirstNameTextField = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        customerLastNameLabel = new javax.swing.JLabel();
+        customerLastNameTextField = new javax.swing.JTextField();
+        customerAddressLabel = new javax.swing.JLabel();
+        customerAddressTextField = new javax.swing.JTextField();
         addDriver = new javax.swing.JPanel();
-        firstNameLabel = new javax.swing.JLabel();
-        firstNameTextField = new javax.swing.JTextField();
-        lastNameLabel = new javax.swing.JLabel();
-        userNameTextField = new javax.swing.JTextField();
-        userNameLabel = new javax.swing.JLabel();
-        lastNameTextField = new javax.swing.JTextField();
-        passwordLabel = new javax.swing.JLabel();
-        passWordTextField = new javax.swing.JTextField();
+        driverFirstNameLabel = new javax.swing.JLabel();
+        driverFirstNameTextField = new javax.swing.JTextField();
+        driverLastNameLabel = new javax.swing.JLabel();
+        driverUserNameTextField = new javax.swing.JTextField();
+        driverUserNameLabel = new javax.swing.JLabel();
+        driverLastNameTextField = new javax.swing.JTextField();
+        driverPasswordLabel = new javax.swing.JLabel();
+        driverPassWordTextField = new javax.swing.JTextField();
         addDriverButton = new javax.swing.JButton();
-        makeOrder = new javax.swing.JPanel();
-        driverComboBox = new javax.swing.JComboBox<>();
-        candyComboBox = new javax.swing.JComboBox<>();
-        confirmOrderButton = new javax.swing.JButton();
-        quantityTextField = new javax.swing.JTextField();
-        candyAmountLabel = new javax.swing.JLabel();
         addInventory = new javax.swing.JPanel();
         firstNameLabel1 = new javax.swing.JLabel();
         itemNameTextField = new javax.swing.JTextField();
         quantity = new javax.swing.JLabel();
-        txtQuantity = new javax.swing.JTextField();
+        inventoryQuantityTextField = new javax.swing.JTextField();
         itemPriceTextField = new javax.swing.JTextField();
         addItemButton = new javax.swing.JButton();
-        Clear = new javax.swing.JButton();
+        inventoryClearButton = new javax.swing.JButton();
         lastNameLabel1 = new javax.swing.JLabel();
-        itemID = new javax.swing.JLabel();
-        txtitemID = new javax.swing.JTextField();
+        makeOrder = new javax.swing.JPanel();
+        itemComboBox = new javax.swing.JComboBox<>();
+        confirmOrderButton = new javax.swing.JButton();
+        orderQuantityTextField = new javax.swing.JTextField();
+        candyAmountLabel = new javax.swing.JLabel();
+        orderClearButton = new javax.swing.JButton();
+        customerComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        addCustomer.setName("Add Customer"); // NOI18N
+
+        customerFirstNameLabel.setText("First Name");
+
+        jButton1.setText("Confirm");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Clear");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        customerLastNameLabel.setText("Last Name");
+
+        customerAddressLabel.setText("Address");
+
+        javax.swing.GroupLayout addCustomerLayout = new javax.swing.GroupLayout(addCustomer);
+        addCustomer.setLayout(addCustomerLayout);
+        addCustomerLayout.setHorizontalGroup(
+            addCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addCustomerLayout.createSequentialGroup()
+                .addGroup(addCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(addCustomerLayout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addGroup(addCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addGroup(addCustomerLayout.createSequentialGroup()
+                                .addComponent(customerAddressLabel)
+                                .addGap(41, 41, 41)
+                                .addComponent(customerAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(addCustomerLayout.createSequentialGroup()
+                                .addComponent(customerLastNameLabel)
+                                .addGap(27, 27, 27)
+                                .addComponent(customerLastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(addCustomerLayout.createSequentialGroup()
+                                .addComponent(customerFirstNameLabel)
+                                .addGap(26, 26, 26)
+                                .addComponent(customerFirstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(addCustomerLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2)))
+                .addContainerGap(145, Short.MAX_VALUE))
+        );
+        addCustomerLayout.setVerticalGroup(
+            addCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addCustomerLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(addCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(customerFirstNameLabel)
+                    .addComponent(customerFirstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(addCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(customerLastNameLabel)
+                    .addComponent(customerLastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(addCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(customerAddressLabel)
+                    .addComponent(customerAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(addCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap())
+        );
 
         addDriver.setName("Add Driver"); // NOI18N
         addDriver.setLayout(new java.awt.GridBagLayout());
 
-        firstNameLabel.setText("First Name");
-        firstNameLabel.setAlignmentX(1.0F);
-        firstNameLabel.setAlignmentY(1.0F);
-        addDriver.add(firstNameLabel, new java.awt.GridBagConstraints());
+        driverFirstNameLabel.setText("First Name");
+        driverFirstNameLabel.setAlignmentX(1.0F);
+        driverFirstNameLabel.setAlignmentY(1.0F);
+        addDriver.add(driverFirstNameLabel, new java.awt.GridBagConstraints());
 
-        firstNameTextField.setToolTipText("");
-        firstNameTextField.setAlignmentX(2.0F);
-        firstNameTextField.setAlignmentY(1.0F);
-        firstNameTextField.addActionListener(new java.awt.event.ActionListener() {
+        driverFirstNameTextField.setToolTipText("");
+        driverFirstNameTextField.setAlignmentX(2.0F);
+        driverFirstNameTextField.setAlignmentY(1.0F);
+        driverFirstNameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                firstNameTextFieldActionPerformed(evt);
+                driverFirstNameTextFieldActionPerformed(evt);
             }
         });
-        addDriver.add(firstNameTextField, new java.awt.GridBagConstraints());
+        addDriver.add(driverFirstNameTextField, new java.awt.GridBagConstraints());
 
-        lastNameLabel.setText("Last Name");
-        lastNameLabel.setAlignmentX(1.0F);
-        lastNameLabel.setAlignmentY(2.0F);
+        driverLastNameLabel.setText("Last Name");
+        driverLastNameLabel.setAlignmentX(1.0F);
+        driverLastNameLabel.setAlignmentY(2.0F);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        addDriver.add(lastNameLabel, gridBagConstraints);
+        addDriver.add(driverLastNameLabel, gridBagConstraints);
 
-        userNameTextField.setAlignmentX(1.0F);
-        userNameTextField.setAlignmentY(2.0F);
+        driverUserNameTextField.setAlignmentX(1.0F);
+        driverUserNameTextField.setAlignmentY(2.0F);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
-        addDriver.add(userNameTextField, gridBagConstraints);
+        addDriver.add(driverUserNameTextField, gridBagConstraints);
 
-        userNameLabel.setText("Username");
-        userNameLabel.setAlignmentX(1.0F);
-        userNameLabel.setAlignmentY(3.0F);
+        driverUserNameLabel.setText("Username");
+        driverUserNameLabel.setAlignmentX(1.0F);
+        driverUserNameLabel.setAlignmentY(3.0F);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        addDriver.add(userNameLabel, gridBagConstraints);
+        addDriver.add(driverUserNameLabel, gridBagConstraints);
 
-        lastNameTextField.setAlignmentX(2.0F);
-        lastNameTextField.setAlignmentY(3.0F);
+        driverLastNameTextField.setAlignmentX(2.0F);
+        driverLastNameTextField.setAlignmentY(3.0F);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        addDriver.add(lastNameTextField, gridBagConstraints);
+        addDriver.add(driverLastNameTextField, gridBagConstraints);
 
-        passwordLabel.setText("Password");
-        passwordLabel.setAlignmentX(1.0F);
-        passwordLabel.setAlignmentY(4.0F);
+        driverPasswordLabel.setText("Password");
+        driverPasswordLabel.setAlignmentX(1.0F);
+        driverPasswordLabel.setAlignmentY(4.0F);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        addDriver.add(passwordLabel, gridBagConstraints);
+        addDriver.add(driverPasswordLabel, gridBagConstraints);
 
-        passWordTextField.setAlignmentX(2.0F);
-        passWordTextField.setAlignmentY(4.0F);
-        passWordTextField.addActionListener(new java.awt.event.ActionListener() {
+        driverPassWordTextField.setAlignmentX(2.0F);
+        driverPassWordTextField.setAlignmentY(4.0F);
+        driverPassWordTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passWordTextFieldActionPerformed(evt);
+                driverPassWordTextFieldActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
-        addDriver.add(passWordTextField, gridBagConstraints);
+        addDriver.add(driverPassWordTextField, gridBagConstraints);
 
         addDriverButton.setText("Add Driver");
         addDriverButton.setAlignmentY(5.0F);
@@ -199,53 +321,6 @@ public class AdminScreen extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 2;
         addDriver.add(addDriverButton, gridBagConstraints);
 
-        makeOrder.setName("Make Order"); // NOI18N
-
-        driverComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        driverComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                driverComboBoxActionPerformed(evt);
-            }
-        });
-
-        candyComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        confirmOrderButton.setText("Confirm Order");
-
-        candyAmountLabel.setText("Candy Amount");
-
-        javax.swing.GroupLayout makeOrderLayout = new javax.swing.GroupLayout(makeOrder);
-        makeOrder.setLayout(makeOrderLayout);
-        makeOrderLayout.setHorizontalGroup(
-            makeOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(makeOrderLayout.createSequentialGroup()
-                .addGap(121, 121, 121)
-                .addGroup(makeOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addGroup(makeOrderLayout.createSequentialGroup()
-                        .addComponent(candyAmountLabel)
-                        .addGap(47, 47, 47)
-                        .addComponent(quantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(confirmOrderButton)
-                    .addComponent(candyComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(driverComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(280, Short.MAX_VALUE))
-        );
-        makeOrderLayout.setVerticalGroup(
-            makeOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(makeOrderLayout.createSequentialGroup()
-                .addGap(112, 112, 112)
-                .addComponent(driverComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(candyComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(makeOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(quantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(candyAmountLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addComponent(confirmOrderButton)
-                .addGap(31, 31, 31))
-        );
-
         addInventory.setName("Add Item"); // NOI18N
         addDriver.setName("Add Employee");
         addInventory.setLayout(new java.awt.GridBagLayout());
@@ -255,7 +330,7 @@ public class AdminScreen extends javax.swing.JFrame {
         firstNameLabel1.setAlignmentY(1.0F);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 0;
         addInventory.add(firstNameLabel1, gridBagConstraints);
 
         itemNameTextField.setToolTipText("");
@@ -268,24 +343,24 @@ public class AdminScreen extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 0;
         addInventory.add(itemNameTextField, gridBagConstraints);
 
         quantity.setText("Quantity");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 2;
         addInventory.add(quantity, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        addInventory.add(txtQuantity, gridBagConstraints);
+        gridBagConstraints.gridy = 2;
+        addInventory.add(inventoryQuantityTextField, gridBagConstraints);
 
         itemPriceTextField.setAlignmentX(2.0F);
         itemPriceTextField.setAlignmentY(3.0F);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 1;
         addInventory.add(itemPriceTextField, gridBagConstraints);
 
         addItemButton.setText("Add Item");
@@ -297,46 +372,111 @@ public class AdminScreen extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 4;
         addInventory.add(addItemButton, gridBagConstraints);
 
-        Clear.setText("Clear");
-        Clear.addActionListener(new java.awt.event.ActionListener() {
+        inventoryClearButton.setText("Clear");
+        inventoryClearButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ClearActionPerformed(evt);
+                inventoryClearButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 5;
-        addInventory.add(Clear, gridBagConstraints);
+        gridBagConstraints.gridy = 4;
+        addInventory.add(inventoryClearButton, gridBagConstraints);
 
         lastNameLabel1.setText("Item Price");
         lastNameLabel1.setAlignmentX(1.0F);
         lastNameLabel1.setAlignmentY(2.0F);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 1;
         addInventory.add(lastNameLabel1, gridBagConstraints);
 
-        itemID.setText("itemID");
-        addInventory.add(itemID, new java.awt.GridBagConstraints());
-        addInventory.add(txtitemID, new java.awt.GridBagConstraints());
+        makeOrder.setName("Make Order"); // NOI18N
+
+        itemComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        itemComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemComboBoxActionPerformed(evt);
+            }
+        });
+
+        confirmOrderButton.setText("Confirm Order");
+        confirmOrderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmOrderButtonActionPerformed(evt);
+            }
+        });
+
+        candyAmountLabel.setText("Candy Amount");
+
+        orderClearButton.setText("Clear");
+        orderClearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                orderClearButtonActionPerformed(evt);
+            }
+        });
+
+        customerComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        customerComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customerComboBoxActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout makeOrderLayout = new javax.swing.GroupLayout(makeOrder);
+        makeOrder.setLayout(makeOrderLayout);
+        makeOrderLayout.setHorizontalGroup(
+            makeOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(makeOrderLayout.createSequentialGroup()
+                .addGap(121, 121, 121)
+                .addGroup(makeOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addGroup(makeOrderLayout.createSequentialGroup()
+                        .addComponent(candyAmountLabel)
+                        .addGap(47, 47, 47)
+                        .addComponent(orderQuantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(itemComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(makeOrderLayout.createSequentialGroup()
+                        .addComponent(confirmOrderButton)
+                        .addGap(20, 20, 20)
+                        .addComponent(orderClearButton))
+                    .addComponent(customerComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        makeOrderLayout.setVerticalGroup(
+            makeOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(makeOrderLayout.createSequentialGroup()
+                .addGap(112, 112, 112)
+                .addComponent(itemComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(customerComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addGroup(makeOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(orderQuantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(candyAmountLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(makeOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(confirmOrderButton)
+                    .addComponent(orderClearButton))
+                .addGap(31, 31, 31))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 620, Short.MAX_VALUE)
+            .addComponent(addCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(47, 47, 47)
+                    .addComponent(addDriver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(169, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(addInventory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(addDriver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -346,16 +486,16 @@ public class AdminScreen extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 323, Short.MAX_VALUE)
+            .addComponent(addCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(13, 13, 13)
+                    .addComponent(addDriver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(156, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(addInventory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(addDriver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -365,34 +505,35 @@ public class AdminScreen extends javax.swing.JFrame {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void passWordTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passWordTextFieldActionPerformed
+    private void driverPassWordTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_driverPassWordTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_passWordTextFieldActionPerformed
+    }//GEN-LAST:event_driverPassWordTextFieldActionPerformed
 
     private void addDriverButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDriverButtonActionPerformed
         // TODO add your handling code here:
-        if(userNameTextField.getText().equals("") ||
-                lastNameTextField.getText().equals("") ||
-                passWordTextField.getText().equals("") ||
-                firstNameTextField.getText().equals("")){
+        if(driverUserNameTextField.getText().equals("") ||
+                driverLastNameTextField.getText().equals("") ||
+                driverPassWordTextField.getText().equals("") ||
+                driverFirstNameTextField.getText().equals("")){
             JOptionPane.showMessageDialog(this, "Please ensure ALL fields are filled", "Incomplete Driver Information", JOptionPane.ERROR_MESSAGE);
         }else{
-            String[] data = {firstNameTextField.getText(), 
-                userNameTextField.getText(),
-                lastNameTextField.getText(),
-                passWordTextField.getText()};
+            String[] data = {driverFirstNameTextField.getText(), 
+                driverLastNameTextField.getText(),
+                driverUserNameTextField.getText(),
+                driverPassWordTextField.getText()};
             MainFrame.getDatabase().addToTables(data, "Driver");
-            try {
-                MainFrame.updateTable("Driver");
-            } catch (SQLException ex) {
-                Logger.getLogger(AdminScreen.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        }
+        try {
+            MainFrame.updateTable("Driver");
+            MainFrame.updateTable("CustOrder");
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_addDriverButtonActionPerformed
 
-    private void firstNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstNameTextFieldActionPerformed
+    private void driverFirstNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_driverFirstNameTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_firstNameTextFieldActionPerformed
+    }//GEN-LAST:event_driverFirstNameTextFieldActionPerformed
 
     private void itemNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNameTextFieldActionPerformed
         // TODO add your handling code here:
@@ -401,32 +542,87 @@ public class AdminScreen extends javax.swing.JFrame {
     private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
         // TODO add your handling code here:
         if(itemNameTextField.getText().equals("") ||
-                !isInteger(itemPriceTextField.getText())){
+                !isInteger(itemPriceTextField.getText()) ||
+                !isInteger(inventoryQuantityTextField.getText())){
             JOptionPane.showMessageDialog(this, "Please ensure ALL fields are filled and are of the right type", "Incomplete Item Information", JOptionPane.ERROR_MESSAGE);
         }else{
             String data[] = {itemNameTextField.getText(),
-                itemPriceTextField.getText()
+                itemPriceTextField.getText(),
+                inventoryQuantityTextField.getText()
             };
             MainFrame.getDatabase().addToTables(data, "Inventory");
-            try {
-                MainFrame.updateTable("Inventory");
-            } catch (SQLException ex) {
-                Logger.getLogger(AdminScreen.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        }
+        try {
+            MainFrame.updateTable("Inventory");
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_addItemButtonActionPerformed
 
-    private void driverComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_driverComboBoxActionPerformed
+    private void itemComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemComboBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_driverComboBoxActionPerformed
+    }//GEN-LAST:event_itemComboBoxActionPerformed
 
-    private void ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearActionPerformed
+    private void inventoryClearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventoryClearButtonActionPerformed
         // TODO add your handling code here:
-        txtitemID.setText("");
         itemNameTextField.setText("");
         itemPriceTextField.setText("");
-        txtQuantity.setText("");
-    }//GEN-LAST:event_ClearActionPerformed
+        inventoryQuantityTextField.setText("");
+    }//GEN-LAST:event_inventoryClearButtonActionPerformed
+
+    private void orderClearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderClearButtonActionPerformed
+        // TODO add your handling code here:
+        orderQuantityTextField.setText("");
+    }//GEN-LAST:event_orderClearButtonActionPerformed
+
+    private void confirmOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmOrderButtonActionPerformed
+        // TODO add your handling code here:
+        if(!isInteger(orderQuantityTextField.getText())){
+            JOptionPane.showMessageDialog(this, "Please ensure ALL fields are filled and are of the right type", "Incomplete Order Information", JOptionPane.ERROR_MESSAGE);
+        }else{
+            String[] data = {"I"+Integer.toString(itemComboBox.getSelectedIndex()),
+            "C"+Integer.toString(customerComboBox.getSelectedIndex()),
+            orderQuantityTextField.getText()};
+            MainFrame.getDatabase().addToTables(data, "CustOrder");
+        }
+        try {
+            MainFrame.updateTable("CustOrder");
+            MainFrame.updateTable("Inventory");
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_confirmOrderButtonActionPerformed
+
+    private void customerComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_customerComboBoxActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        customerFirstNameTextField.setText("");
+        customerLastNameTextField.setText("");
+        customerAddressTextField.setText("");
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(
+                customerFirstNameTextField.getText().equals("") ||
+                customerLastNameTextField.getText().equals("")||
+                customerAddressTextField.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Please ensure ALL fields are filled and are of the right type", "Incomplete Customer Information", JOptionPane.ERROR_MESSAGE);
+        }else{
+            String [] data = {customerFirstNameTextField.getText(),
+            customerLastNameTextField.getText(),
+            customerAddressTextField.getText()};
+            MainFrame.getDatabase().addToTables(data, "Customer");
+        try {
+            MainFrame.updateTable("Customer");
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }            
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -464,32 +660,40 @@ public class AdminScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Clear;
+    private javax.swing.JPanel addCustomer;
     private javax.swing.JPanel addDriver;
     private javax.swing.JButton addDriverButton;
     private javax.swing.JPanel addInventory;
     private javax.swing.JButton addItemButton;
     private javax.swing.JLabel candyAmountLabel;
-    private javax.swing.JComboBox<String> candyComboBox;
     private javax.swing.JButton confirmOrderButton;
-    private javax.swing.JComboBox<String> driverComboBox;
-    private javax.swing.JLabel firstNameLabel;
+    private javax.swing.JLabel customerAddressLabel;
+    private javax.swing.JTextField customerAddressTextField;
+    private javax.swing.JComboBox<String> customerComboBox;
+    private javax.swing.JLabel customerFirstNameLabel;
+    private javax.swing.JTextField customerFirstNameTextField;
+    private javax.swing.JLabel customerLastNameLabel;
+    private javax.swing.JTextField customerLastNameTextField;
+    private javax.swing.JLabel driverFirstNameLabel;
+    private javax.swing.JTextField driverFirstNameTextField;
+    private javax.swing.JLabel driverLastNameLabel;
+    private javax.swing.JTextField driverLastNameTextField;
+    private javax.swing.JTextField driverPassWordTextField;
+    private javax.swing.JLabel driverPasswordLabel;
+    private javax.swing.JLabel driverUserNameLabel;
+    private javax.swing.JTextField driverUserNameTextField;
     private javax.swing.JLabel firstNameLabel1;
-    private javax.swing.JTextField firstNameTextField;
-    private javax.swing.JLabel itemID;
+    private javax.swing.JButton inventoryClearButton;
+    private javax.swing.JTextField inventoryQuantityTextField;
+    private javax.swing.JComboBox<String> itemComboBox;
     private javax.swing.JTextField itemNameTextField;
     private javax.swing.JTextField itemPriceTextField;
-    private javax.swing.JLabel lastNameLabel;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel lastNameLabel1;
-    private javax.swing.JTextField lastNameTextField;
     private javax.swing.JPanel makeOrder;
-    private javax.swing.JTextField passWordTextField;
-    private javax.swing.JLabel passwordLabel;
+    private javax.swing.JButton orderClearButton;
+    private javax.swing.JTextField orderQuantityTextField;
     private javax.swing.JLabel quantity;
-    private javax.swing.JTextField quantityTextField;
-    private javax.swing.JTextField txtQuantity;
-    private javax.swing.JTextField txtitemID;
-    private javax.swing.JLabel userNameLabel;
-    private javax.swing.JTextField userNameTextField;
     // End of variables declaration//GEN-END:variables
 }

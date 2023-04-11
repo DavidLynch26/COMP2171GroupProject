@@ -10,11 +10,13 @@ import databasemanager.DatabaseController;
 import java.awt.Component;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractButton;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import screens.*;
 
@@ -28,8 +30,12 @@ public final class MainFrame extends javax.swing.JFrame {
     private static DefaultTableModel driverModel;
     private static DefaultTableModel inventoryModel;
     private static DefaultTableModel custOrderModel;
+    private static DefaultTableModel OrderModel;
+    private static DefaultTableModel customerModel;
+    private static DefaultComboBoxModel comboBoxModel;
+    private static ArrayList<String> items = new ArrayList<String>();
+    private static ArrayList<String> customers = new ArrayList<String>();
 
-    
     private final static DatabaseController database = new databasemanager.DatabaseController();
     private final static DriverScreen driverScreen = new screens.DriverScreen();
     private final static AdminScreen adminScreen = new screens.AdminScreen();
@@ -43,40 +49,67 @@ public final class MainFrame extends javax.swing.JFrame {
     }
     
     public static void updateTable(String table) throws SQLException{
-        custOrderModel = null;
+//        custOrderModel = null;
         ResultSet rs = database.getAllData(table);
         ResultSetMetaData rsmd = rs.getMetaData();
         
         String[] columnNames = new String[rsmd.getColumnCount()];
         String[] columnData = new String[rsmd.getColumnCount()];
+       
+//        while(rs.next()){
+//            System.out.println("asd");
+//            for(int i = 1; i < rsmd.getColumnCount(); i++){
+//                System.out.print(rs.getString(i) + " ");
+//                System.out.println("asd");
+//            }
+//        }
         
         for(Integer counter = 1; counter <= columnNames.length; counter++){
             columnNames[counter-1] = rsmd.getColumnName(counter);
-            System.out.println(columnNames[counter-1]);
+//            System.out.println(columnNames[counter-1]);
         }       
+//        System.out.println(columnNames);
         switch (table) {
+            case "Customer" -> {
+                customerModel=new DefaultTableModel(columnNames,0);
+                adminScreen.getTable(table).setModel(customerModel);
+            }
             case "Driver" -> {
                 driverModel=new DefaultTableModel(columnNames,0);
-                adminScreen.setTable("Driver");
+                adminScreen.getTable(table).setModel(driverModel);
             }
             case "Inventory" -> {
                 inventoryModel=new DefaultTableModel(columnNames,0);
-                adminScreen.setTable("Inventory");
+                adminScreen.getTable(table).setModel(inventoryModel);
             }
             case "CustOrder" -> {
                 custOrderModel=new DefaultTableModel(columnNames,0);
-                adminScreen.setTable("CustOrder");
+                adminScreen.getTable(table).setModel(custOrderModel);
             }
             default -> {
             }
         }
 
         while(rs.next()){
+            if(table.equals("Inventory")){
+                items.add(rs.getString("item"));
+//                System.out.println(items);
+                adminScreen.getComboBox("items").addItem(rs.getString("item"));
+            }
+            
+            if(table.equals("Customer")){
+                customers.add(rs.getString("firstname") + " " + rs.getString("lastname"));
+//                System.out.println(customers);
+                adminScreen.getComboBox("customers").addItem(rs.getString("firstname") + rs.getString("lastname"));                            }
+            
             for(Integer counter = 1; counter <= columnNames.length; counter++){
                 columnData[counter-1] = rs.getString(columnNames[counter-1]);
-                System.out.println(columnData[counter-1]);
+//                System.out.println(columnData[counter-1]);
             } 
             switch (table) {
+                case "Customer" -> {
+                    customerModel.addRow(columnData);
+                }
                 case "Driver" -> {
                     driverModel.addRow(columnData);
                 }
@@ -90,6 +123,11 @@ public final class MainFrame extends javax.swing.JFrame {
                 }
             }
         }
+        String[] itemList = items.toArray(new String[0]);
+        adminScreen.getComboBox("items").setModel(new javax.swing.DefaultComboBoxModel<>(itemList));
+        
+        String[] customerList = customers.toArray(new String[0]);
+        adminScreen.getComboBox("customers").setModel(new javax.swing.DefaultComboBoxModel<>(customerList)); 
     }
     
     public void loadTabs(String userType){
@@ -256,6 +294,7 @@ public final class MainFrame extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "Successful Login");
                         this.remove(jPanel1);
                         try {
+                            updateTable("Customer");
                             updateTable("Driver");
                             updateTable("Inventory");
                             updateTable("CustOrder");
@@ -345,4 +384,12 @@ public final class MainFrame extends javax.swing.JFrame {
     public static DefaultTableModel getCustOrderModel() {
         return custOrderModel;
     }
+    
+    public static DefaultTableModel getCustomerModel() {
+        return customerModel;
+    }    
+    
+    public static DefaultTableModel getOrderModel() {
+        return customerModel;
+    } 
 }
